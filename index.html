@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>专属告白 | 心动只为你</title>
+    <title>💖 专属告白 · 樱花之恋 💖</title>
     <style>
         * {
             margin: 0;
@@ -16,79 +16,96 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: #000;
+            background: linear-gradient(to bottom, #ffeff6, #ffe6f2, #ffd1e7);
+            background-attachment: fixed;
         }
 
-        /* 粒子背景 */
-        .particle-bg {
+        /* 樱花花瓣 */
+        .sakura {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+            background: #ffc0d5;
+            border-radius: 50% 0 50% 50%;
+            pointer-events: none;
+            animation: sakuraFall linear infinite;
+            z-index: 0;
+            opacity: 0.8;
+            transform: rotate(45deg);
         }
 
-        /* 主容器 */
+        @keyframes sakuraFall {
+            0% {
+                transform: rotate(45deg) translateY(-10vh);
+            }
+            100% {
+                transform: rotate(225deg) translateY(110vh);
+                opacity: 0;
+            }
+        }
+
+        /* 页面容器 */
         .main-box {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
-        /* 初始页面 */
+        /* 渐入动画 */
+        @keyframes fadeShow {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 第一页 */
         .page1 {
             text-align: center;
-            color: #fff;
+            color: #ff5a8c;
             animation: fadeShow 2s ease;
         }
 
         .page1 h2 {
             font-size: 42px;
             margin-bottom: 30px;
-            text-shadow: 0 0 15px #ff7eb9;
         }
 
         .page1 p {
             font-size: 20px;
-            color: #eee;
+            color: #ff7ba5;
             margin-bottom: 50px;
-            letter-spacing: 2px;
         }
 
         .start-btn {
             padding: 16px 45px;
             font-size: 18px;
-            background: linear-gradient(135deg, #ff6a95, #ff4d88);
+            background: #ff5a8c;
             color: #fff;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(255, 77, 136, 0.6);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 20px #ff5a8c55;
+            transition: 0.3s;
         }
 
         .start-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 35px rgba(255, 77, 136, 0.8);
+            box-shadow: 0 0 30px #ff5a8c77;
         }
 
-        /* 第二页 选择页面 */
+        /* 第二页 */
         .page2 {
             display: none;
             text-align: center;
-            color: #fff;
+            color: #ff5a8c;
             animation: fadeShow 1.5s ease;
         }
 
         .page2 h3 {
             font-size: 36px;
             margin-bottom: 40px;
-            text-shadow: 0 0 12px #ff7eb9;
         }
 
         .btn-group {
@@ -104,115 +121,151 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .yes-btn {
-            background: #ff4d88;
+            background: #ff5a8c;
             color: #fff;
         }
 
         .no-btn {
-            background: #666;
+            background: #cccccc;
+            color: #666;
+        }
+
+        /* 游戏页 */
+        .game-page {
+            display: none;
+            width: 100%;
+            color: #ff5a8c;
+            text-align: center;
+            animation: fadeShow 1.5s ease;
+        }
+
+        .game-title {
+            font-size: 32px;
+            margin: 10px 0;
+        }
+
+        .game-tip {
+            font-size: 18px;
+            color: #ff7ba5;
+            margin-bottom: 15px;
+        }
+
+        .score-box {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        /* 卡牌 */
+        .card-wrap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 95px;
+            height: 95px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            backface-visibility: hidden;
+        }
+
+        .card-front {
+            background: #ff8fb8;
             color: #fff;
         }
 
-        /* 最终告白页面 */
+        .card-back {
+            background: #fff;
+            color: #ff5a8c;
+            transform: rotateY(180deg);
+        }
+
+        /* 告白页 */
         .page3 {
             display: none;
             text-align: center;
-            color: #fff;
-            padding: 20px;
+            color: #ff5a8c;
             animation: fadeShow 2s ease;
         }
 
-        .page3 .big-heart {
+        .big-heart {
             font-size: 100px;
-            animation: heartBeat 1s infinite alternate;
-            margin-bottom: 30px;
-            display: inline-block;
+            animation: beat 1s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes beat {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
         }
 
         .page3 h2 {
             font-size: 40px;
-            color: #ff7eb9;
             margin-bottom: 25px;
         }
 
-        .page3 .words {
+        .words {
             font-size: 22px;
             line-height: 2.2;
-            max-width: 700px;
-            margin: 0 auto;
-            color: #f8f8f8;
+            color: #ff5a8c;
         }
 
-        /* 花朵特效 */
-        .flower {
-            position: fixed;
-            font-size: 24px;
-            pointer-events: none;
-            animation: flowerFall 5s linear forwards;
-            z-index: 10;
-        }
-
-        /* 动画定义 */
-        @keyframes fadeShow {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes heartBeat {
-            from { transform: scale(1); }
-            to { transform: scale(1.2); }
-        }
-
-        @keyframes flowerFall {
-            0% {
-                transform: translateY(-10%) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* 移动端适配 */
+        /* 手机适配 */
         @media (max-width: 600px) {
-            .page1 h2, .page3 h2 {
-                font-size: 28px;
-            }
-            .page2 h3 {
-                font-size: 24px;
-            }
-            .page3 .words {
-                font-size: 18px;
-            }
+            .page1 h2, .page3 h2 { font-size: 28px; }
+            .page2 h3, .game-title { font-size: 24px; }
+            .card { width: 70px; height: 70px; }
+            .card-front, .card-back { font-size: 26px; }
         }
     </style>
 </head>
-<body>
-    <div class="particle-bg" id="particles"></div>
 
+<body>
     <div class="main-box">
-        <!-- 第一页 开场 -->
         <div class="page1" id="page1">
-            <h2>远哥有一段悄悄话，想让你看</h2>
-            <p>准备好了吗？小琦琦</p>
+            <h2>有一段话，想讲给你听</h2>
+            <p>准备好了吗？</p>
             <button class="start-btn" onclick="goPage(2)">开启告白</button>
         </div>
 
-        <!-- 第二页 选择页 -->
         <div class="page2" id="page2">
-            <h3>我喜欢你，你愿意喜欢我吗？</h3>
+            <h3>我喜欢你，你愿意做我的偏爱吗？</h3>
             <div class="btn-group">
-                <button class="yes-btn" onclick="goPage(3)">我愿意</button>
+                <button class="yes-btn" onclick="goPage(4)">接受挑战</button>
                 <button class="no-btn" id="noBtn">再考虑一下</button>
             </div>
         </div>
 
-        <!-- 第三页 最终告白 -->
+        <div class="game-page" id="gamePage">
+            <h2 class="game-title">💖 爱心配对大挑战 💖</h2>
+            <p class="game-tip">找出全部相同爱心即可解锁告白</p>
+            <div class="score-box">已配对：<span id="matchNum">0</span> / 6</div>
+            <div class="card-wrap" id="cardBox"></div>
+        </div>
+
         <div class="page3" id="page3">
             <div class="big-heart">❤️</div>
             <h2>何其有幸，遇见你</h2>
@@ -228,66 +281,78 @@
 
     <script>
         // 页面切换
-        function goPage(num) {
-            document.getElementById('page1').style.display = 'none';
-            document.getElementById('page2').style.display = 'none';
-            document.getElementById('page3').style.display = 'none';
+        let cardData = [], openCards = [], lock = false, matchCount = 0, totalPair = 6;
 
-            if(num === 2) {
-                document.getElementById('page2').style.display = 'block';
-            } else if(num === 3) {
-                document.getElementById('page3').style.display = 'block';
-                // 开启满屏花朵
-                setInterval(createFlower, 200);
-            }
+        function goPage(num) {
+            document.querySelectorAll('.page1,.page2,.game-page,.page3').forEach(el => el.style.display = 'none');
+            if (num === 2) document.getElementById('page2').style.display = 'block';
+            if (num === 4) { matchCount = 0; document.getElementById('matchNum').innerText = 0; document.getElementById('gamePage').style.display = 'block'; initGame(); }
+            if (num === 3) document.getElementById('page3').style.display = 'block';
         }
 
-        // "拒绝"按钮躲避效果
+        // 逃跑按钮
         const noBtn = document.getElementById('noBtn');
-        noBtn.addEventListener('mouseover', function() {
-            const w = window.innerWidth - 120;
-            const h = window.innerHeight - 60;
-            let x = Math.random() * w;
-            let y = Math.random() * h;
+        noBtn.addEventListener('mouseover', () => {
+            noBtn.style.left = Math.random() * (window.innerWidth - 120) + 'px';
+            noBtn.style.top = Math.random() * (window.innerHeight - 60) + 'px';
             noBtn.style.position = 'absolute';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
         });
 
-        // 飘落花朵
-        function createFlower() {
-            const flowerArr = ['🌸', '💐', '🌹', '🌷'];
-            let flower = document.createElement('div');
-            flower.className = 'flower';
-            flower.innerHTML = flowerArr[Math.floor(Math.random() * flowerArr.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.fontSize = Math.random() * 20 + 16 + 'px';
-            flower.style.animationDuration = Math.random() * 3 + 4 + 's';
-            document.body.appendChild(flower);
+        // 樱花飘落（全程）
+        function createSakura() {
+            const s = document.createElement('div');
+            s.className = 'sakura';
+            let size = Math.random() * 12 + 8;
+            s.style.width = size + 'px';
+            s.style.height = size + 'px';
+            s.style.left = Math.random() * 100 + 'vw';
+            s.style.animationDuration = Math.random() * 4 + 4 + 's';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 9000);
+        }
+        setInterval(createSakura, 120);
 
-            setTimeout(() => {
-                flower.remove();
-            }, 7000);
+        // 游戏初始化
+        function initGame() {
+            const icons = ['❤️', '💖', '💓', '💕', '💗', '💞'];
+            cardData = [...icons, ...icons].sort(() => Math.random() - 0.5);
+            const box = document.getElementById('cardBox');
+            box.innerHTML = '';
+            openCards = []; lock = false;
+
+            cardData.forEach((icon, i) => {
+                let c = document.createElement('div');
+                c.className = 'card';
+                c.dataset.icon = icon;
+                c.innerHTML = `<div class="card-front">?</div><div class="card-back">${icon}</div>`;
+                c.onclick = flip;
+                box.appendChild(c);
+            });
         }
 
-        // 背景光点粒子
-        function createParticle() {
-            let p = document.createElement('div');
-            p.style.position = 'absolute';
-            p.style.width = Math.random() * 4 + 2 + 'px';
-            p.style.height = p.style.width;
-            p.style.background = '#ff99bb';
-            p.style.borderRadius = '50%';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.top = Math.random() * 100 + '%';
-            p.style.opacity = Math.random() * 0.6 + 0.2;
-            p.style.boxShadow = '0 0 6px #ff7eb9';
-            document.getElementById('particles').appendChild(p);
-        }
+        function flip() {
+            if (lock || this.classList.contains('flip')) return;
+            this.classList.add('flip');
+            openCards.push(this);
 
-        // 生成背景粒子
-        for(let i = 0; i < 80; i++) {
-            createParticle();
+            if (openCards.length === 2) {
+                lock = true;
+                let a = openCards[0], b = openCards[1];
+                if (a.dataset.icon === b.dataset.icon) {
+                    matchCount++;
+                    document.getElementById('matchNum').innerText = matchCount;
+                    a.style.pointerEvents = 'none';
+                    b.style.pointerEvents = 'none';
+                    openCards = []; lock = false;
+                    if (matchCount >= totalPair) setTimeout(() => goPage(3), 700);
+                } else {
+                    setTimeout(() => {
+                        a.classList.remove('flip');
+                        b.classList.remove('flip');
+                        openCards = []; lock = false;
+                    }, 700);
+                }
+            }
         }
     </script>
 </body>
