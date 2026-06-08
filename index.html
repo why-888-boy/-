@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>💖 给我的宝贝 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(120deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            text-align: center;
+            padding-top: 80px;
+            overflow-x: hidden;
+            cursor: pointer;
+        }
+
+        .box {
+            background: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s;
+        }
+
+        h1 {
+            color: #ff5c8a;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .love {
+            font-size: 50px;
+            animation: beat 1s infinite alternate;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            margin: 10px 0;
+            opacity: 0;
+            animation: showText 2s forwards 1s;
+        }
+
+        p:nth-child(2) {
+            animation-delay: 1.5s;
+        }
+
+        p:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        p:nth-child(4) {
+            animation-delay: 2.5s;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes beat {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        @keyframes showText {
+            to { opacity: 1; }
+        }
+
+        /* 爱心飘落 */
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>💌 致我最爱的宝贝小琦琦 💌</h1>
+        <div class="love">❤️</div>
+        <p>世界这么大，而我偏偏遇见你。</p>
+        <p>你笑起来的时候，我觉得整个世界都亮了。</p>
+        <p>我想把所有温柔、所有偏爱、所有浪漫都给你。</p>
+        <p>我爱你，不止今天，而是每一天。</p>
+    </div>
+
+    <script>
+        // 点击屏幕出现爱心
+        document.addEventListener('click', function() {
+            createHeart();
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
